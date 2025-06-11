@@ -1,25 +1,29 @@
 import { useEffect, useState } from "react"; 
 import useSound from "use-sound"; // for handling the sound
-import musicFile from "/src/assets/music.flac"; // importing the music
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"; // icons for play and pause
 import { BiSkipNext, BiSkipPrevious } from "react-icons/bi"; // icons for next and previous track
-import { IconContext } from "react-icons"; // for customazing the icons
+import { IconContext } from "react-icons"; // for customizing the icons
 import CurrentSong from "./CurrentSong";
 
+import { parseFile, selectCover, type IAudioMetadata, type IPicture } from 'music-metadata';
+
+// Hard coded files
+import musicFile from "/src/assets/music.flac"; // importing the music
+
+async function ReadSong(filePath:string) : Promise<CurrentSong> {
+	const {common} = await parseFile(filePath);
+	const cover = selectCover(common.picture); // pick the cover image
+
+	return new CurrentSong(String(common.title), String(common.artist), cover)
+}
 
 function Player() {
-	const [currentlyPlaying, setCurrentlyPlaying] = useState<boolean>(false);
-	const [currTime, setCurrTime] = useState({
-		min: "",
-		sec: "",
-	}); // current position of the audio in minutes and seconds
-
-	const [currentSong, setCurrentSong] = useState(new CurrentSong("/src/assets/music.flac"));
-
-
+	const [currentlyPlaying, setCurrentlyPlaying] = useState<boolean>(false); // whether or not the song is playing
+	const [currTime, setCurrTime] = useState({ min: "",	sec: "",}); // current position of the audio in minutes and seconds
 	const [seconds, setSeconds] = useState(); // current position of the audio in seconds
-
-	const [play, { pause, duration, sound }] = useSound(musicFile);
+	const [play, { pause, duration, sound }] = useSound(musicFile); // reading the audio from the music file
+	
+	const [currentSong, setCurrentSong] = useState(ReadSong(musicFile)); // reading the metadata from the music file
 
 	const playingButton = () => {
 		if (currentlyPlaying) {
@@ -32,40 +36,13 @@ function Player() {
 		}
 	};
 
-	// useEffect(() => {
-	// 	const sec = (duration != null ? duration : 0) / 1000;
-	// 	const min = Math.floor(sec / 60);
-	// 	const secRemain = Math.floor(sec % 60);
-	// 	const time = {
-	// 		min: min,
-	// 		sec: secRemain
-	// 	};
-	// })
-
-	// useEffect(() => {
-	// 	const interval = setInterval(() => {
-	// 		if (sound) {
-	// 			setSeconds(sound.seek([])); // setting the seconds state with the current state
-	// 			const min = Math.floor(sound.seek([]) / 60);
-	// 			const sec = Math.floor(sound.seek([]) % 60);
-	// 			setCurrTime({
-	// 				min,
-	// 				sec,
-	// 			});
-	// 		}
-	// 	}, 1000);
-	// 	return () => clearInterval(interval);
-	// }, [sound]);
-
-
-
 	return (
 	<div className="component">
 		<h2>Playing Now</h2>
-		<img
+		{/* <img
 			className="musicCover"
 			src={currentSong.AlbumArt}
-		/>
+		/> */}
 		<div>
 			<h3 className="title">{currentSong.Title}</h3>
 			<p className="subTitle">{currentSong.Artist}</p>
