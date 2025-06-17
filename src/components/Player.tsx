@@ -1,26 +1,21 @@
 import { useEffect, useState } from "react"; 
 import useSound from "use-sound"; // for handling the sound
-import musicFile from "/src/assets/music.flac"; // importing the music
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"; // icons for play and pause
-import { BiSkipNext, BiSkipPrevious } from "react-icons/bi"; // icons for next and previous track
-import { IconContext } from "react-icons"; // for customazing the icons
-import CurrentSong from "./CurrentSong";
+import { BiSkipNext, BiSkipPrevious, BiSlider } from "react-icons/bi"; // icons for next and previous track
+import { IconContext } from "react-icons"; // for customizing the icons
+
+
+// Hard coded files
+import musicFile from "/src/assets/music.flac"; // importing the music
 
 
 function Player() {
-	const [currentlyPlaying, setCurrentlyPlaying] = useState<boolean>(false);
-	const [currTime, setCurrTime] = useState({
-		min: "",
-		sec: "",
-	}); // current position of the audio in minutes and seconds
-
-	const [currentSong, setCurrentSong] = useState(new CurrentSong("/src/assets/music.flac"));
-
-
-	const [seconds, setSeconds] = useState(); // current position of the audio in seconds
-
-	const [play, { pause, duration, sound }] = useSound(musicFile);
-
+	const [currentlyPlaying, setCurrentlyPlaying] = useState<boolean>(false); // whether or not the song is playing
+	const [play, { pause, duration, sound }] = useSound(musicFile); // reading the audio from the music file
+	const [currTime, setCurrTime] = useState({ min: 0,	sec: 0,}); // current position of the audio in minutes and seconds
+	const [seconds, setSeconds] = useState<number>(); // current position of the audio in seconds
+	const [volume, setVolume] = useState<number>();
+	
 	const playingButton = () => {
 		if (currentlyPlaying) {
 			pause(); // this will pause the audio
@@ -32,68 +27,62 @@ function Player() {
 		}
 	};
 
-	// useEffect(() => {
-	// 	const sec = (duration != null ? duration : 0) / 1000;
-	// 	const min = Math.floor(sec / 60);
-	// 	const secRemain = Math.floor(sec % 60);
-	// 	const time = {
-	// 		min: min,
-	// 		sec: secRemain
-	// 	};
-	// })
-
-	// useEffect(() => {
-	// 	const interval = setInterval(() => {
-	// 		if (sound) {
-	// 			setSeconds(sound.seek([])); // setting the seconds state with the current state
-	// 			const min = Math.floor(sound.seek([]) / 60);
-	// 			const sec = Math.floor(sound.seek([]) % 60);
-	// 			setCurrTime({
-	// 				min,
-	// 				sec,
-	// 			});
-	// 		}
-	// 	}, 1000);
-	// 	return () => clearInterval(interval);
-	// }, [sound]);
-
-
+	useEffect(() => {
+		const interval = setInterval(() => {
+			if (sound) {
+				setSeconds(sound.seek([])); // setting the seconds state with the current state
+				const min = Math.floor(sound.seek([]) / 60);
+				const sec = Math.floor(sound.seek([]) % 60);
+				setCurrTime({
+					min,
+					sec,
+				});
+			}
+		}, 50);
+		return () => clearInterval(interval);
+	}, [sound]);
 
 	return (
 	<div className="component">
 		<h2>Playing Now</h2>
-		<img
-			className="musicCover"
-			src={currentSong.AlbumArt}
-		/>
-		<div>
-			<h3 className="title">{currentSong.Title}</h3>
-			<p className="subTitle">{currentSong.Artist}</p>
-		</div>
 		<div>
 			<button className="prevTrackButton">
-				<IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
+				<IconContext.Provider value={{ size: "3em", color: "#a600d4" }}>
 					<BiSkipPrevious />
 				</IconContext.Provider>
 			</button>
 			{!currentlyPlaying ? (
 				<button className="playButton" onClick={playingButton}>
-					<IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
+					<IconContext.Provider value={{ size: "3em", color: "#a600d4" }}>
 						<AiFillPlayCircle />
 					</IconContext.Provider>
 				</button>
 			) : (
-				<button className="pauseButton" onClick={playingButton}>
-					<IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
+				<button className="playButton" onClick={playingButton}>
+					<IconContext.Provider value={{ size: "3em", color: "#a600d4" }}>
 						<AiFillPauseCircle />
 					</IconContext.Provider>
 				</button>
 			)}
 			<button className="nextTrackButton">
-				<IconContext.Provider value={{ size: "3em", color: "#27AE60" }}>
+				<IconContext.Provider value={{ size: "3em", color: "#a600d4" }}>
 					<BiSkipNext />
 				</IconContext.Provider>
 			</button>
+		</div>
+		<div>
+			Timeline
+			<input
+				type="range"
+				min={0}
+				max={(duration? duration : 0)/1000}
+				step={0.5}
+				onChange={(newValue) => {
+					sound.seek([newValue.target.value]);
+				}}
+				value={seconds}
+			/>
+			{currTime.min}:{currTime.sec < 10 ? "0"+currTime.sec : currTime.sec}
 		</div>
 	</div>
 	);
