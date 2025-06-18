@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react"; 
 import useSound from "use-sound"; // for handling the sound
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"; // icons for play and pause
-import { BiSkipNext, BiSkipPrevious, BiSlider } from "react-icons/bi"; // icons for next and previous track
+import { BiSkipNext, BiSkipPrevious } from "react-icons/bi"; // icons for next and previous track
 import { IconContext } from "react-icons"; // for customizing the icons
-
+import { SongData, GetSongData } from "./SongData";
 
 // Hard coded files
 import musicFile from "/src/assets/music.flac"; // importing the music
-
 
 function Player() {
 	const [currentlyPlaying, setCurrentlyPlaying] = useState<boolean>(false); // whether or not the song is playing
@@ -15,6 +14,7 @@ function Player() {
 	const [currTime, setCurrTime] = useState({ min: 0,	sec: 0,}); // current position of the audio in minutes and seconds
 	const [seconds, setSeconds] = useState<number>(); // current position of the audio in seconds
 	const [volume, setVolume] = useState<number>();
+	const [currentSongData, setCurrentSongData] = useState<SongData>(GetSongData("/src/assets/music.flac"));
 	
 	const playingButton = () => {
 		if (currentlyPlaying) {
@@ -45,6 +45,9 @@ function Player() {
 	return (
 	<div className="component">
 		<h2>Playing Now</h2>
+		<div>
+			title: {currentSongData.Title}
+		</div>
 		<div>
 			<button className="prevTrackButton">
 				<IconContext.Provider value={{ size: "3em", color: "#a600d4" }}>
