@@ -8,18 +8,18 @@ class SongData {
 
     constructor(title:string|undefined, artist:string|undefined, albumArt:IPicture|null) {
 
-        this.Title = title;
-        this.Artist = artist;
-        this.AlbumArt = albumArt;
+    this.Title = title;
+    this.Artist = artist;
+    this.AlbumArt = albumArt;
         console.log(this.Title);
-    }
+  }
 }
 
 function GetSongData(filePath : string) : SongData{
     const [title, setTitle] = useState<string | undefined>();
     const [artist, setArtist] = useState<string | undefined>();
     const [albumArt, setAlbumArt] = useState<IPicture | null>(null);
-    
+
     useEffect(() => {
         const GetSongDataAsync = async () => {
             
@@ -28,7 +28,7 @@ function GetSongData(filePath : string) : SongData{
             setTitle(common.title);
             setArtist(common.artist);
 
-            const cover = selectCover(common.picture);
+                const cover = selectCover(common.picture);
             setAlbumArt(cover);
         }
 

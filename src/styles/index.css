@@ -12,30 +12,39 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
+#root {
+	max-width: 100%;
+	margin: 0 auto;
+	padding: 2rem;
+	text-align: center;
+}
 
-a {
+/* links */
+/* a {
 	font-weight: 500;
 	color: #646cff;
 	text-decoration: inherit;
 }
 a:hover {
 	color: #535bf2;
-}
+} */
 
 body {
 	margin: 0;
 	display: flex;
 	place-items: center;
-	min-width: 320px;
+	min-width: 100%;
 	min-height: 100vh;
 }
 
+/* headers */
 h1 {
 	font-size: 3.2em;
 	line-height: 1.1;
 }
 
-button {
+.trackControlButton {
+	color: #a600d4;
 	border-radius: 0px;
 	border: 1px solid transparent;
 	padding: 0.6em 1.2em;
@@ -44,17 +53,13 @@ button {
 	font-family: inherit;
 	background-color: #1a1a1a;
 	cursor: pointer;
-	transition: border-color 0.25s;
+	transition: border-color 0.15s;
 }
-button:hover {
-	border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-	outline: 4px auto -webkit-focus-ring-color;
+.trackControlButton:hover {
+	border-color: #a600d4;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
 	:root {
 		color: #213547;
 		background-color: #ffffff;
@@ -65,4 +70,10 @@ button:focus-visible {
 	button {
 		background-color: #f9f9f9;
 	}
+} */
+
+.timeline {
+	width: 100%;
+	background-color: #a600d4;
+	color: #a600d4;
 }

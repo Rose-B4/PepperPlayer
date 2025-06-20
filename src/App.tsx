@@ -1,4 +1,3 @@
-import './styles/App.css'
 import Player from './components/Player'
 
 function App() {

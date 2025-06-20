@@ -43,39 +43,40 @@ function Player() {
 	}, [sound]);
 
 	return (
-	<div className="component">
+	<div className="Player" id="test">
 		<h2>Playing Now</h2>
 		<div>
-			title: {currentSongData.Title}
+			Title: {currentSongData.Title} <br/>
+			Artist: {currentSongData.Artist}
 		</div>
 		<div>
-			<button className="prevTrackButton">
-				<IconContext.Provider value={{ size: "3em", color: "#a600d4" }}>
+			<button className="trackControlButton changeTrackButton">
+				<IconContext.Provider value={{ size: "3em" }}>
 					<BiSkipPrevious />
 				</IconContext.Provider>
 			</button>
 			{!currentlyPlaying ? (
-				<button className="playButton" onClick={playingButton}>
-					<IconContext.Provider value={{ size: "3em", color: "#a600d4" }}>
+				<button className="trackControlButton playButton" onClick={playingButton}>
+					<IconContext.Provider value={{ size: "3em"}}>
 						<AiFillPlayCircle />
 					</IconContext.Provider>
 				</button>
 			) : (
-				<button className="playButton" onClick={playingButton}>
-					<IconContext.Provider value={{ size: "3em", color: "#a600d4" }}>
+				<button className="trackControlButton playButton" onClick={playingButton}>
+					<IconContext.Provider value={{ size: "3em"}}>
 						<AiFillPauseCircle />
 					</IconContext.Provider>
 				</button>
 			)}
-			<button className="nextTrackButton">
-				<IconContext.Provider value={{ size: "3em", color: "#a600d4" }}>
+			<button className="trackControlButton changeTrackButton">
+				<IconContext.Provider value={{ size: "3em"}}>
 					<BiSkipNext />
 				</IconContext.Provider>
 			</button>
 		</div>
 		<div>
 			Timeline
-			<input
+			<input className="slider timeline"
 				type="range"
 				min={0}
 				max={(duration? duration : 0)/1000}
