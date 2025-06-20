@@ -3,7 +3,7 @@ import useSound from "use-sound"; // for handling the sound
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"; // icons for play and pause
 import { BiSkipNext, BiSkipPrevious } from "react-icons/bi"; // icons for next and previous track
 import { IconContext } from "react-icons"; // for customizing the icons
-import { SongData, GetSongData } from "./songData";
+import { SongData, GetSongData } from "./SongData";
 
 // Hard coded files
 import musicFile from "/src/assets/music.flac"; // importing the music
