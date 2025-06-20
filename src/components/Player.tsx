@@ -3,7 +3,7 @@ import useSound from "use-sound"; // for handling the sound
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"; // icons for play and pause
 import { BiSkipNext, BiSkipPrevious } from "react-icons/bi"; // icons for next and previous track
 import { IconContext } from "react-icons"; // for customizing the icons
-import { SongData, GetSongData } from "./SongData";
+import { SongData, GetSongData } from "./songData";
 
 // Hard coded files
 import musicFile from "/src/assets/music.flac"; // importing the music
@@ -14,7 +14,7 @@ function Player() {
 	const [currTime, setCurrTime] = useState({ min: 0,	sec: 0,}); // current position of the audio in minutes and seconds
 	const [seconds, setSeconds] = useState<number>(); // current position of the audio in seconds
 	const [volume, setVolume] = useState<number>();
-	const [currentSongData, setCurrentSongData] = useState<SongData>(GetSongData("/src/assets/music.flac"));
+	const [currentSongData, setCurrentSongData] = useState<SongData>(new SongData("/src/assets/music.flac"));
 	
 	const playingButton = () => {
 		if (currentlyPlaying) {
@@ -75,7 +75,6 @@ function Player() {
 			</button>
 		</div>
 		<div>
-			Timeline
 			<input className="slider timeline"
 				type="range"
 				min={0}

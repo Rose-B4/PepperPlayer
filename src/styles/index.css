@@ -11,6 +11,10 @@
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	--mainThemeColor: #a600d4;
+	--backgroundThemeColor: #23002c;
+	/* --backgroundThemeColor: #1a1a1a; */
 }
 #root {
 	max-width: 100%;
@@ -44,19 +48,19 @@ h1 {
 }
 
 .trackControlButton {
-	color: #a600d4;
+	color: var(--mainThemeColor);
 	border-radius: 0px;
 	border: 1px solid transparent;
 	padding: 0.6em 1.2em;
 	font-size: 1em;
 	font-weight: 500;
 	font-family: inherit;
-	background-color: #1a1a1a;
+	background-color: var(--backgroundThemeColor);
 	cursor: pointer;
 	transition: border-color 0.15s;
 }
 .trackControlButton:hover {
-	border-color: #a600d4;
+	border-color: var(--mainThemeColor);
 }
 
 /* @media (prefers-color-scheme: light) {
@@ -73,7 +77,29 @@ h1 {
 } */
 
 .timeline {
-	width: 100%;
-	background-color: #a600d4;
-	color: #a600d4;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;  
+  background: var(--backgroundThemeColor);
+  outline: none;
+  -webkit-transition: .2s;
+}
+
+.timeline::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: var(--mainThemeColor);
+  cursor: pointer;
+}
+
+.timeline::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: var(--mainThemeColor);
+  cursor: pointer;
 }

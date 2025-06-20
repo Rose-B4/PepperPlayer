@@ -1,4 +1,4 @@
-import { parseFile, selectCover, type IPicture } from 'music-metadata';
+import { parseBlob, selectCover, type IPicture } from 'music-metadata';
 import { useEffect, useState } from 'react';
 
 class SongData {
@@ -23,13 +23,14 @@ function GetSongData(filePath : string) : SongData{
     useEffect(() => {
         const GetSongDataAsync = async () => {
             
-            const {common} = await parseFile(filePath);
-        
-            setTitle(common.title);
-            setArtist(common.artist);
 
-                const cover = selectCover(common.picture);
-            setAlbumArt(cover);
+            // const {common} = await parseBlob(filePath);
+        
+            // setTitle(common.title);
+            // setArtist(common.artist);
+
+            //     const cover = selectCover(common.picture);
+            // setAlbumArt(cover);
         }
 
         GetSongDataAsync();
