@@ -1,43 +1,46 @@
-import { parseBlob, selectCover, type IPicture } from 'music-metadata';
+import { parseBlob, parseFile, selectCover, type IPicture } from 'music-metadata';
 import { useEffect, useState } from 'react';
 
 class SongData {
 	public Title:string = "Loading Title...";
 	public Artist:string = "Loading Artist...";
-	public AlbumArt:IPicture|null = null;
+	public AlbumArt:string = "./src/assets/blank_cd.jpg";
+	public FilePath:string;
 
 	constructor(filePath : string) {
-		console.log(filePath);
+		this.FilePath = filePath;
+		// console.log(filePath);
 
-		GetSongData(filePath, this);
+		GetSongData(this);
   }
 }
 
-function GetSongData(filePath:string, dataObject:SongData){
-	const [title, setTitle] = useState<string>(dataObject.Title);
-	const [artist, setArtist] = useState<string>(dataObject.Artist);
-	const [albumArt, setAlbumArt] = useState<IPicture | null>(null);
+function GetSongData(songData:SongData){
+	const [title, setTitle] = useState<string>(songData.Title);
+	const [artist, setArtist] = useState<string>(songData.Artist);
+	const [albumArt, setAlbumArt] = useState<string>(songData.AlbumArt);
+
+	// const reader = new FileReader();
 
 	useEffect(() => {
-		const GetSongDataAsync = async () => {
-			
-
-			// const {common} = await parseBlob(filePath);
+		// const GetSongDataAsync = async () => {
+		// 	const fileBlob:Blob = new Blob([songData.FilePath]);
+		// 	const {common} = await parseBlob(fileBlob);
 		
-			// setTitle(common.title);
-			// setArtist(common.artist);
+		// 	setTitle(common.title? common.title : songData.Title);
+		// 	setArtist(common.artist? common.artist :  songData.Artist);
 
-			//     const cover = selectCover(common.picture);
-			// setAlbumArt(cover);
-		}
+		// 	const cover = selectCover(common.picture);
+		// 	setAlbumArt(cover);
+		// }
 
-		GetSongDataAsync();
+		// GetSongDataAsync();
+		songData.Title = title;
+		songData.Artist = artist
+		songData.AlbumArt = albumArt;
 	}, []);
 
 	
-	dataObject.Title = title;
-	dataObject.Artist = artist
-	dataObject.AlbumArt = albumArt;
 }
 
 export {

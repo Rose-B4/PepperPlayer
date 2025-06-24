@@ -10,11 +10,12 @@ import musicFile from "/src/assets/music.flac"; // importing the music
 
 function Player() {
 	const [currentlyPlaying, setCurrentlyPlaying] = useState<boolean>(false); // whether or not the song is playing
-	const [play, { pause, duration, sound }] = useSound(musicFile); // reading the audio from the music file
 	const [currTime, setCurrTime] = useState({ min: 0,	sec: 0,}); // current position of the audio in minutes and seconds
+	const [totalTime, setTotalTime] = useState({ min: 0,	sec: 0,}); // current position of the audio in minutes and seconds
 	const [seconds, setSeconds] = useState<number>(); // current position of the audio in seconds
 	const [volume, setVolume] = useState<number>();
-	const [currentSongData, setCurrentSongData] = useState<SongData>(new SongData("/src/assets/music.flac"));
+	const [currentSongData, setCurrentSongData] = useState<SongData>(new SongData(musicFile));
+	const [play, { pause, duration, sound }] = useSound(currentSongData.FilePath); // reading the audio from the music file
 	
 	const playingButton = () => {
 		if (currentlyPlaying) {
@@ -31,11 +32,17 @@ function Player() {
 		const interval = setInterval(() => {
 			if (sound) {
 				setSeconds(sound.seek([])); // setting the seconds state with the current state
-				const min = Math.floor(sound.seek([]) / 60);
-				const sec = Math.floor(sound.seek([]) % 60);
+				var min = Math.floor(sound.seek([]) / 60);
+				var sec = Math.floor(sound.seek([]) % 60);
 				setCurrTime({
 					min,
 					sec,
+				});
+				min = Math.floor(((duration? duration:0) / 1000) / 60)
+				sec = Math.floor(((duration? duration:0) / 1000) % 60)
+				setTotalTime({
+					min,
+					sec
 				});
 			}
 		}, 50);
@@ -50,6 +57,9 @@ function Player() {
 			Artist: {currentSongData.Artist}
 		</div>
 		<div>
+			<img className="albumCover" src= {currentSongData.AlbumArt} alt="Album Cover Art" />
+		</div>
+		<div className="trackControls">
 			<button className="trackControlButton changeTrackButton">
 				<IconContext.Provider value={{ size: "3em" }}>
 					<BiSkipPrevious />
@@ -85,7 +95,7 @@ function Player() {
 				}}
 				value={seconds}
 			/>
-			{currTime.min}:{currTime.sec < 10 ? "0"+currTime.sec : currTime.sec}
+			{currTime.min}:{currTime.sec < 10 ? "0"+currTime.sec : currTime.sec} / {totalTime.min}:{totalTime.sec < 10 ? "0"+totalTime.sec : totalTime.sec}
 		</div>
 	</div>
 	);
