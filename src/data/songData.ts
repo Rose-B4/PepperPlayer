@@ -18,15 +18,13 @@ class SongData {
 		this.Title = this.FileBlob?.common.title? this.FileBlob.common.title : this.Title;
 		this.Artist = this.FileBlob?.common.artist? this.FileBlob.common.artist : this.Artist;
 		// this.TrackNum = this.FileBlob?.common.track? this.FileBlob.common.track : this.TrackNum;
-		console.log(this.Title);
-		
 	}
 
 	public SetAlbumArt(blob:Uint8Array|null) {
 		if(blob != null) {
 			this.AlbumArt = URL.createObjectURL(
 				new Blob([blob as BlobPart], {
-					type: "image/jpeg"
+					type: "image/"
 				})
             );
 		}
@@ -50,6 +48,4 @@ function GetSongData(songData:SongData){
 }
 
 
-export {
-	SongData
-}
+export default SongData

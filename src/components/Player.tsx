@@ -3,7 +3,7 @@ import useSound from "use-sound"; // for handling the sound
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"; // icons for play and pause
 import { BiSkipNext, BiSkipPrevious } from "react-icons/bi"; // icons for next and previous track
 import { IconContext } from "react-icons"; // for customizing the icons
-import { SongData } from "./SongData";
+import SongData from "../data/songData";
 
 // Hard coded files
 import musicFile from "/src/assets/music.flac"; // importing the music
@@ -32,12 +32,14 @@ function Player() {
 		const interval = setInterval(() => {
 			if (sound) {
 				setSeconds(sound.seek([])); // setting the seconds state with the current state
+				// get the current point in playback
 				var min = Math.floor(sound.seek([]) / 60);
 				var sec = Math.floor(sound.seek([]) % 60);
 				setCurrTime({
 					min,
 					sec,
 				});
+				// get the total run time
 				min = Math.floor(((duration? duration:0) / 1000) / 60)
 				sec = Math.floor(((duration? duration:0) / 1000) % 60)
 				setTotalTime({
@@ -78,7 +80,7 @@ function Player() {
 					</IconContext.Provider>
 				</button>
 			)}
-			<button className="trackControlButton changeTrackButton">
+			<button className="trackControlButton changeTrackButton" onClick={nextTrack}>
 				<IconContext.Provider value={{ size: "3em"}}>
 					<BiSkipNext />
 				</IconContext.Provider>
