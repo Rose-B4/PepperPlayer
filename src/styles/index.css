@@ -36,6 +36,15 @@ h1 {
 	line-height: 1.1;
 }
 
+.trackControls{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+.timeCounter{
+	padding: 30px;
+}
 .trackControlButton {
 	color: var(--mainThemeColor);
 	border-radius: 0px;

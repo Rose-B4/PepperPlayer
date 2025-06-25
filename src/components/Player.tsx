@@ -59,31 +59,6 @@ function Player() {
 		<div>
 			<img className="albumCover" src= {currentSongData.AlbumArt} alt="Album Cover Art" />
 		</div>
-		<div className="trackControls">
-			<button className="trackControlButton changeTrackButton">
-				<IconContext.Provider value={{ size: "3em" }}>
-					<BiSkipPrevious />
-				</IconContext.Provider>
-			</button>
-			{!currentlyPlaying ? (
-				<button className="trackControlButton playButton" onClick={playingButton}>
-					<IconContext.Provider value={{ size: "3em"}}>
-						<AiFillPlayCircle />
-					</IconContext.Provider>
-				</button>
-			) : (
-				<button className="trackControlButton playButton" onClick={playingButton}>
-					<IconContext.Provider value={{ size: "3em"}}>
-						<AiFillPauseCircle />
-					</IconContext.Provider>
-				</button>
-			)}
-			<button className="trackControlButton changeTrackButton">
-				<IconContext.Provider value={{ size: "3em"}}>
-					<BiSkipNext />
-				</IconContext.Provider>
-			</button>
-		</div>
 		<div>
 			<input className="slider timeline"
 				type="range"
@@ -95,7 +70,42 @@ function Player() {
 				}}
 				value={seconds}
 			/>
+		</div>
+		<div className="trackControls">
+			<div className="timeCounter">
 			{currTime.min}:{currTime.sec < 10 ? "0"+currTime.sec : currTime.sec} / {totalTime.min}:{totalTime.sec < 10 ? "0"+totalTime.sec : totalTime.sec}
+			</div>
+			<div>
+			<button className="trackControlButton changeTrackButton">
+				<IconContext.Provider value={{ size: "3em" }}>
+					<BiSkipPrevious />
+				</IconContext.Provider>
+			</button>
+			</div>
+			{!currentlyPlaying ? (
+				<div>
+				<button className="trackControlButton playButton" onClick={playingButton}>
+					<IconContext.Provider value={{ size: "3em"}}>
+						<AiFillPlayCircle />
+					</IconContext.Provider>
+				</button>
+				</div>
+			) : (
+				<div>
+				<button className="trackControlButton playButton" onClick={playingButton}>
+					<IconContext.Provider value={{ size: "3em"}}>
+						<AiFillPauseCircle />
+					</IconContext.Provider>
+				</button>
+				</div>
+			)}
+			<div>
+			<button className="trackControlButton changeTrackButton">
+				<IconContext.Provider value={{ size: "3em"}}>
+					<BiSkipNext />
+				</IconContext.Provider>
+			</button>
+			</div>
 		</div>
 	</div>
 	);
