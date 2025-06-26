@@ -9,44 +9,12 @@ import SongData from "../data/songData";
 import musicFile from "/src/assets/music.flac"; // importing the music
 
 function Player() {
-	const [currentlyPlaying, setCurrentlyPlaying] = useState<boolean>(false); // whether or not the song is playing
-	const [currTime, setCurrTime] = useState({ min: 0,	sec: 0,}); // current position of the audio in minutes and seconds
-	const [totalTime, setTotalTime] = useState({ min: 0,	sec: 0,}); // current position of the audio in minutes and seconds
-	const [seconds, setSeconds] = useState<number>(); // current position of the audio in seconds
-	const [volume, setVolume] = useState<number>();
 	const [currentSongData, setCurrentSongData] = useState<SongData>(new SongData(musicFile));
-	const [play, { pause, duration, sound }] = useSound(currentSongData.FilePath); // reading the audio from the music file
 	
-	const playingButton = () => {
-		if (currentlyPlaying) {
-			pause(); // this will pause the audio
-			setCurrentlyPlaying(false);
-		}
-		else {
-			play(); // this will play the audio
-			setCurrentlyPlaying(true);
-		}
-	};
-
+	const [play, { pause, duration, sound }] = useSound(currentSongData.FilePath); // reading the audio from the music file
 	useEffect(() => {
 		const interval = setInterval(() => {
-			if (sound) {
-				setSeconds(sound.seek([])); // setting the seconds state with the current state
-				// get the current point in playback
-				var min = Math.floor(sound.seek([]) / 60);
-				var sec = Math.floor(sound.seek([]) % 60);
-				setCurrTime({
-					min,
-					sec,
-				});
-				// get the total run time
-				min = Math.floor(((duration? duration:0) / 1000) / 60)
-				sec = Math.floor(((duration? duration:0) / 1000) % 60)
-				setTotalTime({
-					min,
-					sec
-				});
-			}
+			// if (sound) { }
 		}, 50);
 		return () => clearInterval(interval);
 	}, [sound]);
@@ -61,7 +29,7 @@ function Player() {
 		<div>
 			<img className="albumCover" src= {currentSongData.AlbumArt} alt="Album Cover Art" />
 		</div>
-		<div className="trackControls">
+		{/* <div className="trackControls">
 			<button className="trackControlButton changeTrackButton">
 				<IconContext.Provider value={{ size: "3em" }}>
 					<BiSkipPrevious />
@@ -80,7 +48,7 @@ function Player() {
 					</IconContext.Provider>
 				</button>
 			)}
-			<button className="trackControlButton changeTrackButton" onClick={nextTrack}>
+			<button className="trackControlButton changeTrackButton">
 				<IconContext.Provider value={{ size: "3em"}}>
 					<BiSkipNext />
 				</IconContext.Provider>
@@ -98,7 +66,12 @@ function Player() {
 				value={seconds}
 			/>
 			{currTime.min}:{currTime.sec < 10 ? "0"+currTime.sec : currTime.sec} / {totalTime.min}:{totalTime.sec < 10 ? "0"+totalTime.sec : totalTime.sec}
-		</div>
+		</div> */}
+		<audio
+			controls
+			controlsList="nodownload"
+			src={currentSongData.FilePath}
+		/>
 	</div>
 	);
 }

@@ -10,12 +10,13 @@ function App() {
 
 	return (
 		<>
-			<div >
-				{displayingPlaylist ? null : <HomeScreen />}
-			</div>
 			<div>
-				{displayingPlaylist ? <Playlist /> : null}
+				<PlaylistSideBar />
 			</div>
+			{/* <div >
+				{displayingPlaylist ? null : <HomeScreen />}
+				{displayingPlaylist ? <Playlist /> : null}
+			</div> */}
 		</>
 	)
 }
