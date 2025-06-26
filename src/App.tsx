@@ -13,7 +13,7 @@ function App() {
 			<div>
 				<PlaylistSideBar />
 			</div>
-			<div >
+			<div className='main'>
 				{displayingPlaylist ? null : <HomeScreen />}
 				{displayingPlaylist ? <Playlist /> : null}
 			</div>
