@@ -48,4 +48,4 @@ function GetSongData(songData:SongData){
 }
 
 
-export default SongData
+export {SongData, GetSongData}

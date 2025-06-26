@@ -1,16 +1,26 @@
-import { useEffect, useState } from "react"; 
+import { LegacyRef, useEffect, useRef, useState } from "react"; 
 import useSound from "use-sound"; // for handling the sound
 import { AiFillPlayCircle, AiFillPauseCircle } from "react-icons/ai"; // icons for play and pause
 import { BiSkipNext, BiSkipPrevious } from "react-icons/bi"; // icons for next and previous track
 import { IconContext } from "react-icons"; // for customizing the icons
-import SongData from "../data/songData";
+import {SongData, GetSongData} from "../data/songData";
+import H5AudioPlayer from "react-h5-audio-player";
 
-// Hard coded files
-import musicFile from "/src/assets/music.flac"; // importing the music
+
 
 function Player() {
-	const [currentSongData, setCurrentSongData] = useState<SongData>(new SongData(musicFile));
+	const playlist = [
+		'/src/assets/music.flac',
+		'/src/assets/music2.flac'
+	];
+
+	const [currentSongData, setCurrentSongData] = useState<SongData>(new SongData(playlist[0]));
+	const [volumeLevel, setVolumeLevel] = useState(1)
+	const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 	
+	const playerRef = useRef<H5AudioPlayer & { audio: React.RefObject<HTMLAudioElement> }>(null);
+
+	//#region Really not sure why this section is necessary... but the metadata wont load without it
 	const [play, { pause, duration, sound }] = useSound(currentSongData.FilePath); // reading the audio from the music file
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -18,6 +28,34 @@ function Player() {
 		}, 50);
 		return () => clearInterval(interval);
 	}, [sound]);
+	//#endregion
+
+
+	useEffect(() => {
+		const audioElement = playerRef.current?.audio?.current;
+		if (audioElement) {
+			audioElement.volume = volumeLevel;
+		}
+	}, [volumeLevel]);
+
+
+	const handleClickNext = () => {
+		setCurrentTrackIndex(currentTrackIndex + 1);
+		console.log(playlist[currentTrackIndex]);
+		// currentSongData.FilePath = playlist[currentTrackIndex].src
+		setCurrentSongData(new SongData(playlist[currentTrackIndex]))
+	};
+
+	const handleClickPrev = () => {
+		setCurrentTrackIndex(currentTrackIndex - 1);
+		console.log(playlist[currentTrackIndex]);
+		// currentSongData.FilePath = playlist[currentTrackIndex].src
+	};
+
+	const handleVolumeChange = (newVolume:number) => {
+		setVolumeLevel(newVolume);
+		console.log(volumeLevel);
+	}
 
 	return (
 	<div className="Player" id="test">
@@ -29,49 +67,30 @@ function Player() {
 		<div>
 			<img className="albumCover" src= {currentSongData.AlbumArt} alt="Album Cover Art" />
 		</div>
-		{/* <div className="trackControls">
-			<button className="trackControlButton changeTrackButton">
-				<IconContext.Provider value={{ size: "3em" }}>
-					<BiSkipPrevious />
-				</IconContext.Provider>
-			</button>
-			{!currentlyPlaying ? (
-				<button className="trackControlButton playButton" onClick={playingButton}>
-					<IconContext.Provider value={{ size: "3em"}}>
-						<AiFillPlayCircle />
-					</IconContext.Provider>
-				</button>
-			) : (
-				<button className="trackControlButton playButton" onClick={playingButton}>
-					<IconContext.Provider value={{ size: "3em"}}>
-						<AiFillPauseCircle />
-					</IconContext.Provider>
-				</button>
-			)}
-			<button className="trackControlButton changeTrackButton">
-				<IconContext.Provider value={{ size: "3em"}}>
-					<BiSkipNext />
-				</IconContext.Provider>
-			</button>
-		</div>
 		<div>
-			<input className="slider timeline"
+			<input
 				type="range"
 				min={0}
-				max={(duration? duration : 0)/1000}
-				step={0.5}
-				onChange={(newValue) => {
-					sound.seek([newValue.target.value]);
-				}}
-				value={seconds}
+				max={1}
+				step={0.01}
+				value={volumeLevel}
+				onChange={(newValue) =>
+					handleVolumeChange(parseFloat(newValue.target.value))
+				}
 			/>
-			{currTime.min}:{currTime.sec < 10 ? "0"+currTime.sec : currTime.sec} / {totalTime.min}:{totalTime.sec < 10 ? "0"+totalTime.sec : totalTime.sec}
-		</div> */}
-		<audio
-			controls
-			controlsList="nodownload"
-			src={currentSongData.FilePath}
-		/>
+		</div>
+		<div>
+			<H5AudioPlayer
+				ref={playerRef}
+				src={playlist[currentTrackIndex]}
+				showSkipControls={true}
+				showJumpControls={false}
+				onClickNext={handleClickNext}
+				onClickPrevious={handleClickPrev}
+				volume={volumeLevel}
+				autoPlayAfterSrcChange
+			/>
+		</div>
 	</div>
 	);
 }
