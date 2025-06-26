@@ -1,10 +1,22 @@
-import Player from './components/Player'
+import { useState } from 'react';
+
+import HomeScreen from './components/HomeScreen'
+import PlaylistSideBar from './components/PlaylistSideBar'
+import Playlist from './components/Playlist';
 
 function App() {
 
+	let [displayingPlaylist, setDisplayingPlaylist] = useState<boolean>(true);
+
 	return (
 		<>
-			<Player />
+			<div>
+				<PlaylistSideBar />
+			</div>
+			{/* <div >
+				{displayingPlaylist ? null : <HomeScreen />}
+				{displayingPlaylist ? <Playlist /> : null}
+			</div> */}
 		</>
 	)
 }
