@@ -6,17 +6,17 @@ import Playlist from './components/Playlist';
 
 function App() {
 
-	let [displayingPlaylist, setDisplayingPlaylist] = useState<boolean>(true);
+	let [displayingPlaylist, setDisplayingPlaylist] = useState<boolean>(false);
 
 	return (
 		<>
 			<div>
 				<PlaylistSideBar />
 			</div>
-			{/* <div >
+			<div >
 				{displayingPlaylist ? null : <HomeScreen />}
 				{displayingPlaylist ? <Playlist /> : null}
-			</div> */}
+			</div>
 		</>
 	)
 }
