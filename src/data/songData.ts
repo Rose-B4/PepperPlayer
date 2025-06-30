@@ -18,6 +18,14 @@ class SongData {
 		this.Title = this.FileBlob?.common.title? this.FileBlob.common.title : this.Title;
 		this.Artist = this.FileBlob?.common.artist? this.FileBlob.common.artist : this.Artist;
 		// this.TrackNum = this.FileBlob?.common.track? this.FileBlob.common.track : this.TrackNum;
+		
+	}
+
+	public SetFilePath(newPath:string) {
+		this.FilePath = newPath;
+		console.log(this.FilePath);
+		
+		// GetSongData(this);
 	}
 
 	public SetAlbumArt(blob:Uint8Array|null) {

@@ -14,8 +14,8 @@ function Player() {
 		'/src/assets/music2.flac'
 	];
 
-	const [currentSongData, setCurrentSongData] = useState<SongData>(new SongData(playlist[0]));
-	const [volumeLevel, setVolumeLevel] = useState(1)
+	const [currentSongData, setCurrentSongData] = useState(new SongData(playlist[0]));
+	const [volumeLevel, setVolumeLevel] = useState(0.3)
 	const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 	
 	const playerRef = useRef<H5AudioPlayer & { audio: React.RefObject<HTMLAudioElement> }>(null);
@@ -38,24 +38,18 @@ function Player() {
 		}
 	}, [volumeLevel]);
 
-
 	const handleClickNext = () => {
 		setCurrentTrackIndex(currentTrackIndex + 1);
-		console.log(playlist[currentTrackIndex]);
-		// currentSongData.FilePath = playlist[currentTrackIndex].src
-		setCurrentSongData(new SongData(playlist[currentTrackIndex]))
 	};
 
 	const handleClickPrev = () => {
 		setCurrentTrackIndex(currentTrackIndex - 1);
-		console.log(playlist[currentTrackIndex]);
-		// currentSongData.FilePath = playlist[currentTrackIndex].src
 	};
 
 	const handleVolumeChange = (newVolume:number) => {
 		setVolumeLevel(newVolume);
 		console.log(volumeLevel);
-	}
+	};
 
 	return (
 	<div className="Player" id="test">
@@ -90,6 +84,9 @@ function Player() {
 				volume={volumeLevel}
 				autoPlayAfterSrcChange
 			/>
+		</div>
+		<div>
+			{currentSongData.FilePath}
 		</div>
 	</div>
 	);
