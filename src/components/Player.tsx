@@ -7,15 +7,15 @@ import {SongData, GetSongData} from "../data/songData";
 import H5AudioPlayer from "react-h5-audio-player";
 
 
-
 function Player() {
-	const playlist = [
+	let playlist = [
 		'/src/assets/music.flac',
 		'/src/assets/music2.flac'
 	];
 
 	const [currentSongData, setCurrentSongData] = useState(new SongData(playlist[0]));
 	const [volumeLevel, setVolumeLevel] = useState(0.3)
+	const [seconds, setSeconds] = useState(0)
 	const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
 	
 	const playerRef = useRef<H5AudioPlayer & { audio: React.RefObject<HTMLAudioElement> }>(null);
@@ -28,22 +28,30 @@ function Player() {
 		}, 50);
 		return () => clearInterval(interval);
 	}, [sound]);
+	// })
 	//#endregion
-
 
 	useEffect(() => {
 		const audioElement = playerRef.current?.audio?.current;
 		if (audioElement) {
 			audioElement.volume = volumeLevel;
+			setSeconds(audioElement.currentTime);
+			console.log(seconds);
+			
 		}
 	}, [volumeLevel]);
 
 	const handleClickNext = () => {
-		setCurrentTrackIndex(currentTrackIndex + 1);
+		setCurrentTrackIndex(currentTrackIndex >= playlist.length-1 ? 0 : currentTrackIndex+1);
+		// setCurrentSongData(new SongData(playlist[currentTrackIndex]))
 	};
 
 	const handleClickPrev = () => {
-		setCurrentTrackIndex(currentTrackIndex - 1);
+		setCurrentTrackIndex(currentTrackIndex-1 < 0 ? playlist.length-1 : currentTrackIndex-1);
+		if(currentTrackIndex < 0) {
+			setCurrentTrackIndex(playlist.length - 1)
+		}
+		// setCurrentSongData(new SongData(playlist[currentTrackIndex]))
 	};
 
 	const handleVolumeChange = (newVolume:number) => {
@@ -61,7 +69,7 @@ function Player() {
 		<div>
 			<img className="albumCover" src= {currentSongData.AlbumArt} alt="Album Cover Art" />
 		</div>
-		<div>
+		<div className="VolumeSlider">
 			<input
 				type="range"
 				min={0}
@@ -70,6 +78,20 @@ function Player() {
 				value={volumeLevel}
 				onChange={(newValue) =>
 					handleVolumeChange(parseFloat(newValue.target.value))
+				}
+			/>
+		</div>
+		<div className="Timeline">
+			<input
+				type="range"
+				min={0}
+				max={playerRef.current?.audio.current?.duration}
+				value={seconds}
+
+				onChange={(newValue) =>
+					// console.log(newValue.target.value)
+					console.log(playerRef.current?.progressBar)
+					// handleVolumeChange(parseFloat(newValue.target.value))
 				}
 			/>
 		</div>
@@ -84,9 +106,6 @@ function Player() {
 				volume={volumeLevel}
 				autoPlayAfterSrcChange
 			/>
-		</div>
-		<div>
-			{currentSongData.FilePath}
 		</div>
 	</div>
 	);
