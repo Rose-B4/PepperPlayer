@@ -32,6 +32,12 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, 'preload.mjs'),
     },
+    width:1920,
+    height:1080,
+    autoHideMenuBar:true, // remove the `file` `edit` `view` etc. buttons from top of screen
+    fullscreenable:false, // make it so f11 cant be pressed to true full screen
+    minWidth:600,
+    minHeight:500,
   })
 
   // Test active push message to Renderer-process.
