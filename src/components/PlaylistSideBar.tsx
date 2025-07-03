@@ -1,18 +1,12 @@
 function PlaylistSideBar() {
 
     return (
-        <>
-            <p>Playlist 0</p>
-            <p>Playlist 1</p>
-            <p>Playlist 2</p>
-            <p>Playlist 3</p>
-            <p>Playlist 4</p>
-            <p>Playlist 5</p>
-            <p>Playlist 6</p>
-            <p>Playlist 7</p>
-            <p>Playlist 8</p>
-            <p>Playlist 9</p>
-        </>
+        <div className ="sidenav">
+        <a href="#playlist1">Playlist1</a>
+        <a href="#playlist2">Playlist2</a>
+        <a href="#playlist3">Playlist3</a>
+        <a href="#playlist4">Playlist4</a>
+        </div>
     )
 }
 
