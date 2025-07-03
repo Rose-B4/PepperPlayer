@@ -7,9 +7,7 @@ import Player from './components/Player.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />
-    <div className='main'>
     <Player />
-    </div>
   </React.StrictMode>,
 )
 
