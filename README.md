@@ -1,30 +1,32 @@
-# React + TypeScript + Vite
+# Pepper Player
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TS+React+Electron based audio player for use on Windows, Linux, and MacOS computers locally and with the [Prepper Disk](https://www.prepperdisk.com/) (mobile support planned for future updates)
 
-Currently, two official plugins are available:
+## Folder structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This application will work best with a specific file structure on your computer. All this should be in the default `Music` folder on your system. For example, on Linux Mint that is `/home/username/Music/` and for Windows it would be `C:/Users/username/Music`.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+The intended file structure within your music folder is:
+```
+├─┬ Artist 0
+| |
+| ├─┬Album 0
+| | ├─Track 0
+| | └─Track 1
+| |
+| └─┬Album 1
+|   ├─Track 0
+|   └─Track 1
+|
+└─┬ Artist 1
+  |
+  ├─┬Album 0
+  | ├─Track 0
+  | └─Track 1
+  |
+  └─┬Album 1
+    ├─Track 0
+    └─Track 1
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Folder and file names do not matter and are not read, but this structure will allow the program to automatically filter by album. All audio files in the `Music` folder will be read, even if not in this structure.
