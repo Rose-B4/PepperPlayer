@@ -6,7 +6,6 @@ import { IconContext } from "react-icons"; // for customizing the icons
 import {SongData, GetSongData} from "../data/songData";
 import H5AudioPlayer from "react-h5-audio-player";
 
-
 function Player() {
 	let playlist = [
 		'/src/assets/music.flac',
@@ -69,8 +68,9 @@ function Player() {
 		<div>
 			<img className="albumCover" src= {currentSongData.AlbumArt} alt="Album Cover Art" />
 		</div>
-		<div className="VolumeSlider">
+		<div>
 			<input
+				className="VolumeSlider"
 				type="range"
 				min={0}
 				max={1}
@@ -81,9 +81,11 @@ function Player() {
 				}
 			/>
 		</div>
-		<div className="Timeline">
+		<div>
 			<input
+				className="Timeline"
 				type="range"
+				step="any"
 				min={0}
 				max={playerRef.current?.audio.current?.duration}
 				value={seconds}

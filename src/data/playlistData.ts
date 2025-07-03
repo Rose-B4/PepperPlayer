@@ -1,4 +1,4 @@
-import SongData from "./songData"
+import { SongData } from "./songData"
 
 class PlayListData {
     public Name:string = "Loading Playlist Name";

@@ -15,7 +15,15 @@ function createWindow() {
     icon: path.join(process.env.VITE_PUBLIC, "electron-vite.svg"),
     webPreferences: {
       preload: path.join(__dirname, "preload.mjs")
-    }
+    },
+    width: 1920,
+    height: 1080,
+    autoHideMenuBar: true,
+    // remove the `file` `edit` `view` etc. buttons from top of screen
+    fullscreenable: false,
+    // make it so f11 cant be pressed to true full screen
+    minWidth: 600,
+    minHeight: 500
   });
   win.webContents.on("did-finish-load", () => {
     win == null ? void 0 : win.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());

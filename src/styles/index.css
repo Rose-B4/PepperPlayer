@@ -19,8 +19,6 @@
 }
 #root {
 	width: 100%;
-	/* margin: 0 auto; */
-	/* padding: 2rem; */
 	text-align: center;
 }
 
@@ -32,7 +30,6 @@ body {
 	min-height: 100vh;
 }
 
-/* headers */
 h1 {
 	font-size: 3.2em;
 	line-height: 1.1;
@@ -51,34 +48,6 @@ h1 {
 }
 .trackControlButton:hover {
 	border-color: var(--mainAccentColor);
-}
-
-.timeline {
-	-webkit-appearance: none;
-	width: 100%;
-	height: 15px;
-	border-radius: 5px;  
-	background: var(--mainBackgroundColor);
-	outline: none;
-	-webkit-transition: .2s;
-}
-
-.timeline::-webkit-slider-thumb {
-	-webkit-appearance: none;
-	appearance: none;
-	width: 25px;
-	height: 25px;
-	border-radius: 50%; 
-	background: var(--mainAccentColor);
-	cursor: pointer;
-}
-
-.timeline::-moz-range-thumb {
-	width: 25px;
-	height: 25px;
-	border-radius: 50%;
-	background: var(--mainAccentColor);
-	cursor: pointer;
 }
 
 .albumCover {
@@ -124,11 +93,6 @@ h1 {
   padding-top: 20px;
 }
 
-
-/* .Timeline {
-	top:0;
-	width:100%;
-} */
 
 .main {
   margin-left: 160px; /* Same as the width of the sidenav */
