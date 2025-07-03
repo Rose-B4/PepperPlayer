@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 class SongData {
 	public Title:string = "Loading Title...";
 	public Artist:string = "Loading Artist...";
-	// public TrackNum:number = 0;
 	public AlbumArt:string = "./src/assets/blank_cd.jpg";
 	public FilePath:string;
 	public FileBlob:IAudioMetadata|null = null;
@@ -17,7 +16,14 @@ class SongData {
 	public UpdateTrackInfo() {
 		this.Title = this.FileBlob?.common.title? this.FileBlob.common.title : this.Title;
 		this.Artist = this.FileBlob?.common.artist? this.FileBlob.common.artist : this.Artist;
-		// this.TrackNum = this.FileBlob?.common.track? this.FileBlob.common.track : this.TrackNum;
+	}
+
+	public SetFilePath(newPath:string) {
+		this.FilePath = newPath;
+		console.log(this.FilePath);
+
+		GetSongData(this);
+
 	}
 
 	public SetAlbumArt(blob:Uint8Array|null) {
@@ -26,7 +32,7 @@ class SongData {
 				new Blob([blob as BlobPart], {
 					type: "image/"
 				})
-            );
+			);
 		}
 	}
 }
@@ -40,7 +46,8 @@ function GetSongData(songData:SongData){
 				.then(blob => songData.FileBlob = blob)
 				.then(blob => blob.common.picture? blob.common.picture[0] : null)
 				.then(blob => songData.SetAlbumArt(blob? blob.data : null))
-				.then(blob => songData.UpdateTrackInfo());
+				.then(blob => songData.UpdateTrackInfo())
+				.then(blob => console.log("Data updated"))
 		}
 
 		GetSongDataAsync();
@@ -48,4 +55,4 @@ function GetSongData(songData:SongData){
 }
 
 
-export default SongData
+export {SongData, GetSongData}
